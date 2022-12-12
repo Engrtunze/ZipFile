@@ -25,7 +25,7 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	compileOnly 'org.springframework.boot:spring-boot-starter-actuator'
-	compileOnly 'commons-io:commons-io:2.11.0'
+	implementation 'commons-io:commons-io:2.11.0'
 }
 
 tasks.named('test') {
