@@ -35,10 +35,15 @@ Run on docker by cloning the repo from the docker hub using the following comman
 docker pull engrtunze/file-compressor:latest
 ```
 
-Then build the image using the following command
+Then check if the image is added to your docker using the following command,
 
 ```bash
- https://github.com/Engrtunze/ZipFile.git
+ docker images
+```
+expected output will be
+```
+REPOSITORY                    TAG       IMAGE ID       CREATED       SIZE
+engrtunze/file-compressor     latest    27200cfec375   time creaded    421MB`
 ```
 After building run the command below to run the docker container
 ```bash
@@ -64,7 +69,7 @@ Then click on the `Save Response` drop-down as shown in the image above and clic
 
 You can decide to save the zip file in a preferred location in a system.
 
-# Thought Process
+# Development Documentation 🤓
 ## classes and interfaces created
 - FileCompressor
 - FileConverter
@@ -73,7 +78,19 @@ You can decide to save the zip file in a preferred location in a system.
 
 --> Created a utility class called FileCompressor which has two methods which are
 - zipFIle : This methods returns a string of file path that can be downloaded after zipping and also accept MultipartFile type
-  and a String that a user passes from the fronend into the service to process it to zip.
+  and a String that a user passes from the frontend into the service to process it to zip.
 
-- compressAndDownload: This method recieves path file as a String, this methods returns the path file sent to it as a resouces that can be downloaded.
+- compressAndDownload: This method receives path file as a String, this methods returns the path file sent to it as a resources that can be downloaded.
   This was done because of the single responsibility principles in The S.O.L.I.D principles.
+
+--> Created a FileConverter interface which returns `Resources` and accept `MultipartFile`(which represent any kind of file type)
+  and `fileName`(This represent a custom name that can be given to the zipped file).
+
+--> FileConverterImpl implements the interface this is the service layer where the logic is written the method makes a call to the methods in the utility class.
+
+--> FileConverterController this is the rest service layer that phases the client and exposes the url or endpoint to access the service,
+because we need to pass in a file i had to use `@RequestParam` to accept file and String.
+
+## EXTRAS
+
+- This can also be done by saving the uploaded file in AWS S3 bucket and then the link will be returned and saved into the database for referencial purposes in a live applicaion.
